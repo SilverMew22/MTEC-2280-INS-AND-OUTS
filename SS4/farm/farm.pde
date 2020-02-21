@@ -1,5 +1,7 @@
 PImage cow;
 PImage hay;
+PImage dirt;
+PImage sky;
 int L_buttonX=50;
 int L_buttonY=height/2+150;
 int hayX=width/2;
@@ -13,6 +15,8 @@ void setup() {
   rectMode(CENTER);
   cow=loadImage("beast.png");
   hay=loadImage("Hay.png");
+  dirt=loadImage("dirt.png");
+  sky=loadImage("sky.png");
 }
 
 void draw() {
@@ -27,21 +31,22 @@ void draw() {
    fill(0);
    rect(L_buttonX, L_buttonY+200, 50, 50, 50);
    fill(252, 252, 169);
-  if (drop==height/2) {
-    drop=height/2;
-  // }*/
-
-  //hay on a rope
-  if (mousePressed//&&mouseX>=L_buttonX&&mouseY>=L_buttonY&&mouseX>=L_buttonX+50&&mouseY>=L_buttonY+50
+   if (drop==height/2) {
+   drop=height/2;
+   // }*/
+  image(sky, width/2, height/2-100);
+  sky.resize(1200, 300);
+  image(dirt, width/2, height/2+200);
+  dirt.resize(1200, 300);
+  image(cow, width/2, height/2);
+  image(hay, mouseX, mouseY);
+  if (
+  //mousePressed&&  
+  mouseX>=width/2&&mouseY>=height/2&&mouseX>=width/2+50&&mouseY>=height/2+50
     ) {
-    background(145, 202, 235);
     image(hay, width/2, height/2-drop++);
     if (drop<height) {
       drop++;
     }
-    
   }
-  image(cow, width/2, height/2);
-   //image(hay, width/2, height/2-drop);
-   image(hay, mouseX,mouseY);
 }
