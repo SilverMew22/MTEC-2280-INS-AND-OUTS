@@ -48,4 +48,13 @@ void draw() {
     text("Yummy, thank you for the food, can I have some water now!", 
       width/2, height/2);      
   }
+  for(int i=50;i<=150;i++){
+  for(int j=50;j<=150;j++){
+  storm(i,j,10);
+  }}
+}
+void storm(int x,int y, int dia){
+fill(127,183,179);  
+ellipse(x/2,y/2,dia,dia);
+  
 }
