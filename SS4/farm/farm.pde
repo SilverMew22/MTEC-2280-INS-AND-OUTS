@@ -2,51 +2,50 @@ PImage cow;
 PImage hay;
 PImage dirt;
 PImage sky;
+PImage water;
 int L_buttonX=50;
 int L_buttonY=height/2+150;
 int hayX=width/2;
 int hayY=height/2;
 float drop=400;
+int hay_size=200;
+float hayYLoc=height/2;
 
 void setup() {
   size(1200, 500);
   background(255);
   imageMode(CENTER);
   rectMode(CENTER);
+  textAlign(CENTER);
+  textSize(30);
   cow=loadImage("beast.png");
   hay=loadImage("Hay.png");
   dirt=loadImage("dirt.png");
   sky=loadImage("sky.png");
+  water=loadImage("bucket.png");
+  hayX=width/2;
+  hayY=height/2;
 }
 
 void draw() {
   background(145, 202, 235);
   noStroke();
-  /*for (int c=0; c<=width; c+=20) {
-   fill(173, 166, 144);
-   rect(c, height/2+160, 50, 200);
-   fill(105, 99, 84);
-   rect(c+10, height/2+160, 50, 200);
-   //left_button
-   fill(0);
-   rect(L_buttonX, L_buttonY+200, 50, 50, 50);
-   fill(252, 252, 169);
-   if (drop==height/2) {
-   drop=height/2;
-   // }*/
   image(sky, width/2, height/2-100);
-  sky.resize(1200, 300);
-  image(dirt, width/2, height/2+200);
+  sky.resize(1200, 600);
+  image(dirt, width/2, height/2+250);
   dirt.resize(1200, 300);
-  image(cow, width/2, height/2);
-  image(hay, mouseX, mouseY);
-  if (
-  //mousePressed&&  
-  mouseX>=width/2&&mouseY>=height/2&&mouseX>=width/2+50&&mouseY>=height/2+50
-    ) {
-    image(hay, width/2, height/2-drop++);
-    if (drop<height) {
-      drop++;
-    }
+  // move the cow
+  image(cow, mouseX, hayY);
+  image(water, hayX-500, hayYLoc+250);
+  water.resize(100, 200);
+  image(hay, hayX+470, hayYLoc+320);  
+  text("Feed the cow", width/2, height/2+220);
+  if (mouseX<=width/5) {
+    text("Great, thank you for the water, can I have some food now!", 
+      width/2, height/2);      
+  }
+  if (mouseX>=width-200) {
+    text("Yummy, thank you for the food, can I have some water now!", 
+      width/2, height/2);      
   }
 }
