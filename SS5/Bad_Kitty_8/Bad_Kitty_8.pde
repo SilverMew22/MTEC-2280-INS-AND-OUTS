@@ -2,6 +2,8 @@
 //hover cat over couch and mouse press to scratch
 
 Jars[] jars=new Jars[4];
+float move=1;
+
 
 void setup() {
   size(1000, 600);
@@ -12,9 +14,13 @@ void setup() {
 void draw() {
   noStroke();
   background(255);
+
   fill(200);
-  rect(0, 400, width, height/3);
+  rect(0+move, 400, width, height/3);
+
   window(width/2-200, height/2-200);
+  window(width/2-400, height/2-200);
+  window(width/2-600, height/2-200);
   for (int i=0; i<width; i++) {
     for (int l=0; l<height/3; l++) {
       fill(100);
@@ -22,6 +28,7 @@ void draw() {
     }
   }
   couch(100);
+  shelf();
   for (int i=0; i<jars.length; i++) {
     jars[i].makeJar(i*100+200, i);
     jars[i].makeJar(i*100+200, i+100);
@@ -85,19 +92,18 @@ void couch(int x) {
   ellipse(width/2-200+x, height/2+100, 100, 100);
   fill(200);
   ellipse(width/2-600+x, height/2+100, 100, 100);
-    fill(100);
+  fill(100);
   ellipse(width/2-200+x, height/2+100, 20, 20);
   fill(100);
   ellipse(width/2-600+x, height/2+100, 20, 20);
   if (mousePressed&&mouseX<400&&mouseX<450&&mouseY>width/3) {
-    stroke(0);
-    strokeWeight(.5);
-    line(x+200, x+300, x+200, x+350);
-    line(x+150, x+300, x+150, x+350);
-    line(x+100, x+300, x+100, x+350);
+    scratch(50);
+    scratch(0);
   }
 }
 void window(int x, int y) {  
+  noStroke();
+  fill(140);
   rect(x-20, y-10, 150, 200);
   fill(255);
   rect(0+x, 0+y, 50, 50);
@@ -106,4 +112,20 @@ void window(int x, int y) {
   rect(60+x, 60+y, 50, 50);
   rect(0+x, 120+y, 50, 50);
   rect(60+x, 120+y, 50, 50);
+}
+void scratch(int x) {
+  stroke(0);
+  strokeWeight(.5);
+  line(x+200, x+300, x+250, x+350);
+  line(x+210, x+300, x+260, x+350);
+  line(x+220, x+300, x+270, x+350);
+}
+void shelf() {
+  fill(160);
+  rect(width/2+50, height/2-400, 400, 600);
+  fill(120);
+  rect(width/2+65, height/2-175, 380, 10);
+  rect(width/2+65, height/2-175+100, 380, 10);
+  rect(width/2+65, height/2-175+200, 380, 10);
+  rect(width/2+65, height/2-175+300, 380, 10);
 }
