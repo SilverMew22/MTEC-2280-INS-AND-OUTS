@@ -2,6 +2,11 @@
 //hover cat over couch and mouse press to scratch
 Magnets[] magnets=new Magnets[5];
 float move=0;
+float sholder= 70;
+float foot =130;
+float swipe=0;
+float tipX=.01;
+float tipY=.01;
 
 void setup() {
   size(1000, 600);
@@ -11,43 +16,69 @@ void setup() {
 }
 void draw() {
   noStroke();
-  background(255);
+  background(0);
+  border();
   fill(200);
-  rect(0+move, 400, width, height/3);
-  window(width/2-200, height/2-200);
-  window(width/2-400, height/2-200);
-  window(width/2-600, height/2-200);
-  for (int i=0; i<width; i++) {
-    for (int l=0; l<height/3; l++) {
+  rect(0+move-250, 400, 1300, height/3);
+  window(width/2-200, height/2-250);
+  window(width/2-400, height/2-250);
+  window(width/2-600, height/2-250);
+  //floor
+  for (int i=0; i<=65; i++) {
+    for (int l=0; l<=65; l++) {
       fill(100);
-      rect(i*20+move, l+400+2, 10, 10);
+      ellipse(i*20+move-250, l*10+405, 4, 4);
+      ellipse(l*20+move-250, i*50+405, 10, 10);
     }
   }
-  counter(100);
+  counter(-150);
   frige();
   for (int i=0; i<=4; i++) {
     for (int j=0; j<=4; j++) {
       magnets[i]=new Magnets();
     }
   }
+  plate(100, 250);
+  plate(200, 250);
+  plate(300, 250);
+  sink(-130, 270);
   kitty();
   moving();
 }
 
 
 void kitty() {
-  fill(0);
+  stroke(0);
+  strokeWeight(17);
+  //moving paw
+  line(mouseX-10, mouseY+sholder, mouseX+swipe+tipX, mouseY+foot+tipY);
+  //feet
+  line(mouseX-30, mouseY+sholder, mouseX-30, mouseY+foot);
+  line(mouseX-70, mouseY+sholder, mouseX-70, mouseY+foot);
+  line(mouseX-90, mouseY+sholder, mouseX-90, mouseY+foot);
+  //tail
+  line(mouseX-90, mouseY+40, mouseX-90, mouseY-100);
+  noStroke();
+  fill(0); 
   ellipse(mouseX, mouseY, 100, 100);
   triangle(mouseX-50, mouseY-100, mouseX-50, mouseY, mouseX, mouseY);
   triangle(mouseX+50, mouseY-100, mouseX+50, mouseY, mouseX, mouseY);
   rect(mouseX-100, mouseY+30, 100, 50, 20);
-  rect(mouseX-100, mouseY-100, 10, 250, 20);
-  rect(mouseX-25, mouseY+50, 10, 100, 20);
-  rect(mouseX-50, mouseY+50, 10, 100, 20);
-  rect(mouseX-75, mouseY+50, 10, 100, 20);
   fill(255);
   ellipse(mouseX-10, mouseY, 30, 30);
-  ellipse(mouseX+30, mouseY, 30, 30);
+  ellipse(mouseX+30, mouseY, 30, 30);  
+
+  if (mousePressed) {
+    stroke(0);
+    strokeWeight(18);
+    fill(0);
+    //eyes
+    line(mouseX, mouseY, mouseX-20, mouseY-20);
+    line(mouseX+20, mouseY, mouseX+40, mouseY-20);
+    swipe=20;
+  } else {
+    swipe=0;
+  }
 }
 class Magnets {
   int y;  
@@ -69,14 +100,10 @@ class Magnets {
   }
 }
 void counter(int x) {
-  rect(width/2-500+x+move, height/2, 400, 200);
+  rect(width/2-500+x+move, height/2, 500, 200);
   fill(150);  
-  rect(width/2-510+x+move, height/2, 420, 20, 200);
-  fill(250);  
-  if (mousePressed&&mouseX<400&&mouseX<450&&mouseY>width/3) {
-    scratch(50);
-    scratch(0);
-  }
+  rect(width/2-510+x+move, height/2, 520, 20, 200);
+  fill(250);
 }
 void window(int x, int y) {  
   noStroke();
@@ -111,11 +138,38 @@ void frige() {
 }
 
 void moving() {
-  if (mouseX<=width/1.5) {
-    //move+=1;
-  } else if (mouseX>=width/3) {
-    // move-=1;
-  } else if (mouseY>=height/1.5&&mouseX<=height/2.9) {
-    move=0;
+  if (keyPressed) {
+    if (key== 'a') {
+      move+=5;
+    } else if (key=='d') {
+      move-=5;
+    }
   }
+}
+
+void border() {
+  fill(255);
+  rect(-250+move, 0, 1300, 600);
+}
+
+void plate(int x, int y) {
+  fill(240);
+  ellipse(x+move, y, 110, 110);
+  fill(230);
+  ellipse(x+move, y, 70, 70);
+};
+
+void sink(int x, int y) {
+  //base
+  rect(x+move+10+50, y-20, 20, 50, 10);
+  //neck
+  rect(x+move+10+50, y-20, 50, 20, 100);
+  fill(170);
+  rect(x+move, y+20, 150, 10);
+  //knobs
+  ellipse(x+move+10, y+5, 40, 30);
+  ellipse(x+move+140, y+5, 40, 30);
+  fill(240);
+  ellipse(x+move+10, y, 20, 15);
+  ellipse(x+move+140, y, 20, 15);
 }
