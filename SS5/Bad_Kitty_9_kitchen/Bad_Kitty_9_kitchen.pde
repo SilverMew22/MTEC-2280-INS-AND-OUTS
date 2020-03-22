@@ -2,14 +2,15 @@
 //hover cat over couch and mouse press to scratch
 Magnets[] magnets=new Magnets[5];
 float move=0;
-float sholder= 70;
-float foot =130;
-float swipe=0;
-float tipX=.01;
-float tipY=.01;
+float paw;
+float c=170;
+float body=80;
+boolean pounce;
+float scratch=0;
 
 void setup() {
   size(1000, 600);
+    pounce=false;
   for (int i=0; i<=4; i++) {
     magnets[i]=new Magnets();
   }
@@ -42,44 +43,90 @@ void draw() {
   plate(200, 250);
   plate(300, 250);
   sink(-130, 270);
-  kitty();
+  cat();
+   if (mousePressed) {
+    pounce=true;
+  } else {
+    pounce=false;
+  }
+  if (scratch>30) {
+    scratch=10;
+  }
   moving();
 }
 
 
-void kitty() {
-  stroke(0);
-  strokeWeight(17);
-  //moving paw
-  line(mouseX-10, mouseY+sholder, mouseX+swipe+tipX, mouseY+foot+tipY);
-  //feet
-  line(mouseX-30, mouseY+sholder, mouseX-30, mouseY+foot);
-  line(mouseX-70, mouseY+sholder, mouseX-70, mouseY+foot);
-  line(mouseX-90, mouseY+sholder, mouseX-90, mouseY+foot);
-  //tail
-  line(mouseX-90, mouseY+40, mouseX-90, mouseY-100);
-  noStroke();
-  fill(0); 
-  ellipse(mouseX, mouseY, 100, 100);
-  triangle(mouseX-50, mouseY-100, mouseX-50, mouseY, mouseX, mouseY);
-  triangle(mouseX+50, mouseY-100, mouseX+50, mouseY, mouseX, mouseY);
-  rect(mouseX-100, mouseY+30, 100, 50, 20);
-  fill(255);
-  ellipse(mouseX-10, mouseY, 30, 30);
-  ellipse(mouseX+30, mouseY, 30, 30);  
-
-  if (mousePressed) {
+void cat() {
+  if (pounce==false) {
     stroke(0);
-    strokeWeight(18);
+    strokeWeight(17);
     fill(0);
-    //eyes
-    line(mouseX, mouseY, mouseX-20, mouseY-20);
-    line(mouseX+20, mouseY, mouseX+40, mouseY-20);
-    swipe=20;
-  } else {
-    swipe=0;
+    //feet
+    line(mouseX, mouseY-70, mouseX, mouseY);
+    line(mouseX-20, mouseY-70, mouseX-20, mouseY);
+    line(mouseX-100, mouseY-70, mouseX-100, mouseY);
+    line(mouseX-120, mouseY-70, mouseX-120, mouseY);
+    //tail
+    line(mouseX-90, mouseY-70, mouseX-130, mouseY-250);
+ 
+    head(0, 0);
+    //body
+    stroke(0);
+    strokeWeight(50);
+    line(mouseX-90, mouseY-body, mouseX-15, mouseY-body);
+     strokeWeight(17);
+     fill(0);
+    // circle(mouseX-80, mouseY-70, 40);
+     circle(mouseX-90,mouseY-70,40);
+  }
+  if (pounce==true) {
+    stroke(0);
+    strokeWeight(17);
+    fill(0);
+    //feet
+    line(mouseX-10, mouseY-70, mouseX+scratch++, mouseY);    
+    //elbow
+    line(mouseX-50, mouseY-30, mouseX-40, mouseY-40);
+    line(mouseX-50, mouseY-30, mouseX-30, mouseY);    
+    line(mouseX-100, mouseY-70, mouseX-80, mouseY);
+    line(mouseX-120, mouseY-70, mouseX-100, mouseY);
+    //tail
+    line(mouseX-100, mouseY-70, mouseX-130, mouseY-250);
+
+    head(+20, -20);
+    //body
+    stroke(0);
+    strokeWeight(50);
+    line(mouseX-90, mouseY-body, mouseX-15, mouseY-60);
+     strokeWeight(17);
+     fill(0);
+     //circle(mouseX-80, mouseY-65, 40);
+     circle(mouseX-90,mouseY-65,40);
   }
 }
+void head(int a, int b) {
+  //head
+  //left ear
+  triangle(mouseX-50+b, mouseY-240+a, mouseX-30+b, mouseY-c+a, mouseX+40+b, mouseY-c+a);
+  //right ear
+  triangle(mouseX+60+b+20, mouseY-240+a, mouseX+50+b+15, mouseY-c+a, mouseX+b, mouseY-c+a);
+  circle(mouseX+20+b, mouseY-150+a, 100);
+  //eyes
+  //lefteye
+  strokeWeight(2);
+  fill(255);
+  circle(mouseX+b, mouseY-150+a, 40);
+  //right eye
+  circle(mouseX+55+b, mouseY-150+a, 40);
+  if (mousePressed) {
+    //left eyelid
+    fill(0);
+    circle(mouseX+b+15, mouseY-160+a, 40);
+    //right eyelid
+    circle(mouseX+40+b, mouseY-160+a, 40);
+  }
+}
+
 class Magnets {
   int y;  
   int x;
