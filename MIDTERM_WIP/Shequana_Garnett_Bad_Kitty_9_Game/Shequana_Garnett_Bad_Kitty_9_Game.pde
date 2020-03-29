@@ -9,7 +9,9 @@ float scratch=0;
 int score;
 int fri1;
 float fri=0;
-float fall;
+float fall=0;
+float test=0;
+float test2=255;
 //jars
 Jar[] jars=new Jar[4];
 
@@ -55,16 +57,7 @@ void draw() {
   if (scene!=1) {
     scorePos(200);
   }
-  /*
-  //drop_object_to_keep_score
-   fill(30, 40, 50);
-   ellipse(width/2, height/2+fall, 200, 200);
-   if (mousePressed) {
-   fall=400;
-   }
-   if (fall>200) {
-   score++;
-   }*/
+  if (test==255||test2==0){score=score+1;}
 }
 
 void keyPressed() {
@@ -158,7 +151,6 @@ void window(int x, int y) {
   rect(0+x+move, 120+y, 50, 50);
   rect(60+x+move, 120+y, 50, 50);
 }
-//window
 //kitchen
 void counter(int x) {
   rect(width/2-500+x+move, height/2, 500, 200);
@@ -167,18 +159,29 @@ void counter(int x) {
   fill(250);
 }
 void frige(int x) {
+  //base
   fill(160);
   rect(width/2+50+move+x, height/2-300, 300, 500, 40);
+  //inside
   fill(100);
   rect(width/2+60+move+x, height/2-280, 280, 200, 50);
   rect(width/2+60+move+x, height/2-70, 280, 240, 50);
   rect(width/2+60+move+x, height/2-240, 280, 160);
   rect(width/2+60+move+x, height/2-70, 280, 200);
+  //shelf
+  fill(250);
+  rect(width/2+60+move+x, height/2-150, 280, 5);
+  rect(width/2+60+move+x, height/2+120, 280, 5);
+  rect(width/2+60+move+x, height/2+50, 280, 5);
+  rect(width/2+60+move+x, height/2-10, 280, 5);
+  //shelf
+  //door
   fill(200);
   rect(width/2+60+move+x+fri1, height/2-280, 280+fri, 200, 50);
   rect(width/2+60+move+x+fri1, height/2-70, 280+fri, 240, 50);
   rect(width/2+60+move+x+fri1, height/2-240, 280+fri, 160);
   rect(width/2+60+move+x+fri1, height/2-70, 280+fri, 200);  
+  //handle
   fill(160);
   rect(width/2+70+move+x+fri1, height/2-30, 20, 50, 100);
   rect(width/2+70+move+x+fri1, height/2-150, 20, 50, 100);
@@ -208,7 +211,6 @@ void sink(int x, int y) {
   ellipse(x+move+140, y, 20, 15);
   //kitchen
 } 
-
 void scene3() {
   background(0);
   noStroke();  
@@ -232,15 +234,6 @@ void scene3() {
     jars[i].display(i*100+200, i+100);
     jars[i].display(i*100+200, i+200);
     jars[i].display(i*100+200, i+300);
-
-   jars[i].drop(i*100+200, i+400);
-    jars[i].drop(i*100+200, i+100+300);
-    jars[i].drop(i*100+200, i+200+200);
-    jars[i].drop(i*100+200, i+300+100);
-    //jars[i].hover(i, i, mouseX, mouseY);
-    //if (mouseX>i&&mouseX<i+60&&mouseY>i&&mouseY<i+60) {
-    //  jars[i].fall();
-    //}
   }
   cat();
   if (mousePressed) {
@@ -253,8 +246,6 @@ void scene3() {
   }
   moving();
 }
-
-
 void cat() {
   if (pounce==false) {
     stroke(0);
@@ -323,28 +314,6 @@ void head(int a, int b) {
     circle(mouseX+40+b, mouseY-160+a, 40);
   }
 }
-class Jars {
-  int y;  
-  int x;
-  float speed;
-  Jars() {
-    y=0;
-    x=0;
-    speed=1;
-  }
-  void display(int x, int y) {    
-    fill(0);
-    rect(400+x+move, 50+y, 20, 50);
-    ellipse(410+x+move, 100+y, 50, 50);
-    ellipse(410+x+move, 50+y, 30, 10);
-    ellipse(410+x+move, 125+y, 30, 10);
-  }
-  void fall() {  
-    if (mouseX>=x&&mouseX<=x+50&&mouseY>y&&mouseY<y+50) {
-      y+=10;
-    }
-  }
-}
 void couch(int x) {
   rect(width/2-600+x+move, height/2, 400, 200, 100);
   fill(200);
@@ -378,7 +347,6 @@ void shelf() {
   rect(width/2+65+move, height/2-175+200, 380, 10);
   rect(width/2+65+move, height/2-175+300, 380, 10);
 }
-
 void scene4() { 
   noStroke();
   background(0);
@@ -397,7 +365,7 @@ void scene4() {
     }
   }
   bed(-450, -50);
-  dresser(20, +10);
+  dresser(20, 10, 0);
   cat();
   if (mousePressed) {
     pounce=true;
@@ -427,15 +395,18 @@ void bed(int x, int y) {
     ellipse(460+a+x+move, height/2+100+y, 110, 50);
   }
 }
-void dresser(int x, int y) {
+void dresser(int x, int y, int z) {
   fill(100);
-  ellipse(width/2+275+x+move, height/2-200+y, 300, 400);
-  fill(240);
-  ellipse(width/2+275+x+move, height/2-200+y, 280, 380);
+  ellipse(width/2+275+x+move, height/2-200+y+z, 300, 400);
+  fill(240,240,240,test2);
+  ellipse(width/2+275+x+move, height/2-200+y+z, 280, 380);
   fill(175);  
   rect(width/2+125+x+move, height/2-70+y, 300, 200);
   fill(105);  
   rect(width/2+100+x+move, height/2-70+y, 350, 10);
+  if (mousePressed) {
+    test2--;
+  }
 }
 void button(int x, String scene, int shader) {
   noStroke();
@@ -454,14 +425,12 @@ void scorePos(int a) {
   fill(255);   
   text("score: " + score + " /100", width/2+a, height/4-100);
 }
-
 class Jar {
   float x;
   float y;
   int dia;
   int w;
   int h;
-  float a;
   float b;
   Jar() {
     x=width/2;
@@ -469,38 +438,25 @@ class Jar {
     dia=50;
     w=0;
     h=0;
-    a=400;
     b=50;
   }
   void display(int w, int h) {
-    fill(0);
-    rect(a+w+move, b+h, dia-30, dia);   
-    ellipse(a+10+w+move, b*2+h, dia, dia);  
-    ellipse(a+10+w+move, b+h, dia-20, dia-40); 
-    ellipse(a+10+w+move, b*2+25+h, dia-20, dia-40); 
+    fill(test);
+    rect(400+w+move, 50+h, dia-30, dia);       
+    ellipse(410+w+move, 50+h, dia-20, dia-40); 
+    ellipse(410+w+move, 125+h, dia-20, dia-40); 
+    //base
+    rect(410+w+move-25, 75+h, dia, dia, 100);
     fill(200);
-    ellipse(a+10+w+move+15, b*2+h, dia-40, dia-30);   
+    ellipse(410+w+move+15, 100+h, dia-40, dia-30);   
     println("x = " + mouseX);
     println("y =" + mouseY);
-  }
-  
-  void drop(int w, int h) {
-    if (mouseX>=a+w+move&&mouseX<=a+10+w+move+dia) {
-    fill(255);
-    rect(a+w+move, b+h+500, dia-30, dia);
-    ellipse(a+10+w+move, b*2+h+500, dia, dia);
-    ellipse(a+10+w+move, b+h+500, dia-20, dia-40);
-    ellipse(a+10+w+move, b*2+25+h+500, dia-20, dia-40);
+    if (mousePressed&&mouseX>410+w+move-25&&mouseX<410+w+move-25+dia&&mouseY>100+h-25&&mouseY<100+h-25+dia) {
+test++;
     }
-  }
-  void shatter() {
-  }
+  }    
 }
-
 /*void mousePressed() {
+ //testing score increses
  score++;
- }
- 
- void fall() {
- fall=fall++;
  }*/
