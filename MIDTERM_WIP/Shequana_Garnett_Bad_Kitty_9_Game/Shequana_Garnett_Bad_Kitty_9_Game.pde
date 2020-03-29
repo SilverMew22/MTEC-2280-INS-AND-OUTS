@@ -7,12 +7,20 @@ float body=80;
 boolean pounce;
 float scratch=0;
 int score;
+int fri1;
+float fri=0;
 float fall;
+//jars
+Jar[] jars=new Jar[4];
+
 void setup() {
   size(1000, 600);  
   textAlign(CENTER);
   textSize(100);
   pounce=false;
+  for (int i=0; i<jars.length; i++) {
+    jars[i]=new Jar();
+  }
 }
 void draw() {  
   background(0);
@@ -39,13 +47,13 @@ void draw() {
     button(210, "BEDROOM(4)", 100);
   } else if (scene==4) {
     scene4();
-    button(-480, "START(1)",100);
+    button(-480, "START(1)", 100);
     button(-250, "KITCHEN(2)", 100);
     button(-20, "LIVINGROOM(3)", 100);
     button(210, "BEDROOM(4)", 255);
   }  
   if (scene!=1) {
-scorePos(200);
+    scorePos(200);
   }
   /*
   //drop_object_to_keep_score
@@ -104,7 +112,7 @@ void scene2() {
     }
   }
   counter(-150);
-  frige();  
+  frige(190);  
   plate(100, 250);
   plate(200, 250);
   plate(300, 250);
@@ -158,17 +166,26 @@ void counter(int x) {
   rect(width/2-510+x+move, height/2, 520, 20, 200);
   fill(250);
 }
-void frige() {
+void frige(int x) {
   fill(160);
-  rect(width/2+50+move, height/2-300, 300, 500, 100);
-  fill(190);
-  rect(width/2+60+move, height/2-280, 280, 200, 50);
-  rect(width/2+60+move, height/2-70, 280, 240, 50);
-  rect(width/2+60+move, height/2-240, 280, 160);
-  rect(width/2+60+move, height/2-70, 280, 200);
+  rect(width/2+50+move+x, height/2-300, 300, 500, 40);
+  fill(100);
+  rect(width/2+60+move+x, height/2-280, 280, 200, 50);
+  rect(width/2+60+move+x, height/2-70, 280, 240, 50);
+  rect(width/2+60+move+x, height/2-240, 280, 160);
+  rect(width/2+60+move+x, height/2-70, 280, 200);
+  fill(200);
+  rect(width/2+60+move+x+fri1, height/2-280, 280+fri, 200, 50);
+  rect(width/2+60+move+x+fri1, height/2-70, 280+fri, 240, 50);
+  rect(width/2+60+move+x+fri1, height/2-240, 280+fri, 160);
+  rect(width/2+60+move+x+fri1, height/2-70, 280+fri, 200);  
   fill(160);
-  rect(width/2+70+move, height/2-30, 20, 50, 100);
-  rect(width/2+70+move, height/2-150, 20, 50, 100);
+  rect(width/2+70+move+x+fri1, height/2-30, 20, 50, 100);
+  rect(width/2+70+move+x+fri1, height/2-150, 20, 50, 100);
+  if (mousePressed&&mouseX>=width/2+60+move+x+fri1&&mouseX<width/2+60+move+x+fri1+280) {
+    fri1++;
+    fri--;
+  }
 }
 void plate(int x, int y) {
   fill(240);
@@ -211,14 +228,19 @@ void scene3() {
   couch(100);
   shelf();
   for (int i=0; i<=3; i++) {
-    //jars[i].display(i*100+200,i);
-    //jars[i].makeJar(i*100+200, i+100);
-    //jars[i].makeJar(i*100+200, i+200);
-    //jars[i].makeJar(i*100+200, i+300);
+    jars[i].display(i*100+200, i);
+    jars[i].display(i*100+200, i+100);
+    jars[i].display(i*100+200, i+200);
+    jars[i].display(i*100+200, i+300);
+
+   jars[i].drop(i*100+200, i+400);
+    jars[i].drop(i*100+200, i+100+300);
+    jars[i].drop(i*100+200, i+200+200);
+    jars[i].drop(i*100+200, i+300+100);
     //jars[i].hover(i, i, mouseX, mouseY);
-    if (mouseX>i&&mouseX<i+60&&mouseY>i&&mouseY<i+60) {
-      //jars[i].fall();
-    }
+    //if (mouseX>i&&mouseX<i+60&&mouseY>i&&mouseY<i+60) {
+    //  jars[i].fall();
+    //}
   }
   cat();
   if (mousePressed) {
@@ -425,12 +447,54 @@ void button(int x, String scene, int shader) {
   fill(shader);
   text(scene, width/2+100+x, height/2+290);
 }
-void scorePos(int a){
-    fill(0,0,0,100);
-    ellipse(width/2+a,height/4-120,400,100);
-    textSize(50);
-    fill(255);   
-    text("score: " + score + " /100", width/2+a, height/4-100);
+void scorePos(int a) {
+  fill(0, 0, 0, 100);
+  ellipse(width/2+a, height/4-120, 400, 100);
+  textSize(50);
+  fill(255);   
+  text("score: " + score + " /100", width/2+a, height/4-100);
+}
+
+class Jar {
+  float x;
+  float y;
+  int dia;
+  int w;
+  int h;
+  float a;
+  float b;
+  Jar() {
+    x=width/2;
+    y=height/2;
+    dia=50;
+    w=0;
+    h=0;
+    a=400;
+    b=50;
+  }
+  void display(int w, int h) {
+    fill(0);
+    rect(a+w+move, b+h, dia-30, dia);   
+    ellipse(a+10+w+move, b*2+h, dia, dia);  
+    ellipse(a+10+w+move, b+h, dia-20, dia-40); 
+    ellipse(a+10+w+move, b*2+25+h, dia-20, dia-40); 
+    fill(200);
+    ellipse(a+10+w+move+15, b*2+h, dia-40, dia-30);   
+    println("x = " + mouseX);
+    println("y =" + mouseY);
+  }
+  
+  void drop(int w, int h) {
+    if (mouseX>=a+w+move&&mouseX<=a+10+w+move+dia) {
+    fill(255);
+    rect(a+w+move, b+h+500, dia-30, dia);
+    ellipse(a+10+w+move, b*2+h+500, dia, dia);
+    ellipse(a+10+w+move, b+h+500, dia-20, dia-40);
+    ellipse(a+10+w+move, b*2+25+h+500, dia-20, dia-40);
+    }
+  }
+  void shatter() {
+  }
 }
 
 /*void mousePressed() {
