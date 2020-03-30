@@ -12,6 +12,7 @@ float fri=0;
 float fall=0;
 float test=0;
 float test2=255;
+float sheet=50;
 //jars
 Jar[] jars=new Jar[4];
 
@@ -57,7 +58,9 @@ void draw() {
   if (scene!=1) {
     scorePos(200);
   }
-  if (test==255||test2==0){score=score+1;}
+  if (test==255||test2==0) {
+    score=score+1;
+  }
 }
 
 void keyPressed() {
@@ -131,14 +134,10 @@ void moving() {
     }
   }
 }
-//move left of right
-//border
 void border() {
   fill(255);
   rect(-250+move, 0, 1300, 600);
 }
-//border
-//window
 void window(int x, int y) {  
   noStroke();
   fill(140);
@@ -158,6 +157,43 @@ void counter(int x) {
   rect(width/2-510+x+move, height/2, 520, 20, 200);
   fill(250);
 }
+void milk(int x, int y) {
+  noStroke();
+  fill(190);
+  rect(width/2+x+move, height/2+y, 50, 100);
+  triangle(width/2+50+x+move, height/2+y, width/2+25+x+move, height/2-25+y, width/2+x+move, height/2+y);
+  fill(150);
+  rect(width/2+5+x+move, height/2+5+y, 40, 90);
+  stroke(190);
+  strokeWeight(5);
+  line(width/2+25+x+move, height/2+y, width/2+25+x+move, height/2-30+y);
+  noStroke();
+  fill(240);
+  rect(width/2+5+x+move, height/2+20+y, 40, 40);
+  fill(150);
+  triangle(width/2+45+x+move, height/2+y, width/2+25+x+move, height/2-15+y, width/2+5+x+move, height/2+y);
+}
+
+void bottle(int x, int y) {
+  fill(50);
+  ellipse(width/2+x+move, height/2+y, 50, 50);
+  rect(width/2-25+x+move, height/2+y, 50, 90, 10);
+  rect(width/2-10+x+move, height/2-60+y, 20, 50, 10);
+  rect(width/2-15+x+move, height/2-60+y, 30, 10, 10);
+  fill(200);
+  ellipse(width/2+10+x+move, height/2-5+y, 20, 20);
+}
+
+void fruit(int x, int y) {
+  fill(50);
+  ellipse(width/2+x+move, height/2+y, 50, 50);
+  fill(150);
+  ellipse(width/2+x+move, height/2-25+y, 10, 20);
+  ellipse(width/2+9+x+move, height/2-15+y, 20, 10);
+  ellipse(width/2-10+x+move, height/2-5+y, 5, 5);
+  ellipse(width/2-5+x+move, height/2-10+y, 5, 5);
+  ellipse(width/2-10+x+move, height/2-15+y, 5, 5);
+}
 void frige(int x) {
   //base
   fill(160);
@@ -170,12 +206,18 @@ void frige(int x) {
   rect(width/2+60+move+x, height/2-70, 280, 200);
   //shelf
   fill(250);
-  rect(width/2+60+move+x, height/2-150, 280, 5);
-  rect(width/2+60+move+x, height/2+120, 280, 5);
-  rect(width/2+60+move+x, height/2+50, 280, 5);
   rect(width/2+60+move+x, height/2-10, 280, 5);
   //shelf
   //door
+  //food
+  milk(390, -180);
+  milk(290, -180);
+  bottle(350, 80);
+  bottle(450, 80);
+  fruit(500, -35);
+  fruit(400, -35);
+  fruit(300, -35);
+  //food
   fill(200);
   rect(width/2+60+move+x+fri1, height/2-280, 280+fri, 200, 50);
   rect(width/2+60+move+x+fri1, height/2-70, 280+fri, 240, 50);
@@ -191,10 +233,11 @@ void frige(int x) {
   }
 }
 void plate(int x, int y) {
-  fill(240);
+  fill(240,240,240);
   ellipse(x+move, y, 110, 110);
-  fill(230);
+  fill(230,230,230);
   ellipse(x+move, y, 70, 70);
+  
 }
 void sink(int x, int y) {
   //base
@@ -385,20 +428,23 @@ void bed(int x, int y) {
   fill(200);
   rect(width/2-200+x+move, height/2+y, 600, 200, 100);  
   //sheet
-  fill(150);  
+  fill(150,150,150);  
   rect(width/2-100+x+move, height/2+y, 500, 200, 100);
   //base
   fill(50);
   rect(width/2-200+x+move, height/2+100+y, 600, 100);  
   for (int a=0; a<=width/3; a+=110) {
-    fill(150);  
-    ellipse(460+a+x+move, height/2+100+y, 110, 50);
+    fill(150,150,150);  
+    ellipse(460+a+x+move, height/2+100+y, 110,50);
+  }
+  if(mousePressed){
+  //test2--;
   }
 }
 void dresser(int x, int y, int z) {
-  fill(100);
+  fill(100,100,100);
   ellipse(width/2+275+x+move, height/2-200+y+z, 300, 400);
-  fill(240,240,240,test2);
+  fill(250, 250, 250,test2);
   ellipse(width/2+275+x+move, height/2-200+y+z, 280, 380);
   fill(175);  
   rect(width/2+125+x+move, height/2-70+y, 300, 200);
@@ -410,7 +456,7 @@ void dresser(int x, int y, int z) {
 }
 void button(int x, String scene, int shader) {
   noStroke();
-  fill(200);
+  fill(250);
   rect(width/2-10+x, height/2+240, 220, 70);
   fill(0);
   rect(width/2+x, height/2+250, 200, 50);
@@ -452,9 +498,9 @@ class Jar {
     println("x = " + mouseX);
     println("y =" + mouseY);
     if (mousePressed&&mouseX>410+w+move-25&&mouseX<410+w+move-25+dia&&mouseY>100+h-25&&mouseY<100+h-25+dia) {
-test++;
+      test++;
     }
-  }    
+  }
 }
 /*void mousePressed() {
  //testing score increses
