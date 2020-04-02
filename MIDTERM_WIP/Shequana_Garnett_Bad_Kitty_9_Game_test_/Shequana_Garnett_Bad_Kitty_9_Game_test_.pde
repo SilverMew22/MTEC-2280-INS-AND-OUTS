@@ -13,7 +13,9 @@ class Jar {
   float b =50;
   int fader=255;
   boolean fadeout;
-  Jar(float tempH, float tempW) {
+
+  Jar(float tempH, float tempW) 
+  {
     w=tempW;
     h=tempH;
   }
@@ -25,16 +27,16 @@ class Jar {
     //rounded base
     ellipse(410+w+move, 100+h, dia, dia);
     //base
-    fill(200,200,200,fader);
+    fill(200, 200, 200, fader);
     ellipse(410+w+move+15, 100+h, dia-40, dia-30);
   }
   void fade() {
-    if (mouseX>w-dia/2&&mouseX<w+dia/2&&mouseY>h-dia/2&&mouseY<h+dia/2)
+    if (mouseX>=410+w-dia/2&&mouseX<=410+w+dia/2&&mouseY>=100+h-dia/2&&mouseY<=100+h+dia/2)
     {
       fadeout=true;
     }    
     if (fadeout==true) {     
-      fader--;
+      fader-=10;
     }
   }
 }
