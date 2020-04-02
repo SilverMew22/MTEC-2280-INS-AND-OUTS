@@ -5,7 +5,7 @@ float c=170;
 float body=80;
 boolean pounce;
 float scratch=0;
-int score;
+int score=0;
 int fri1;
 float fri=0;
 float fall=0;
@@ -13,12 +13,17 @@ float test=0;
 float test2=255;
 float test3=255;
 float test4=255;
+float testF=255;
 float sheet=50;
 int row=4;
 int col=4;
 float flow=0;
 float puddle=0;
-float fluff=0;
+float fluff;
+float sheet1=0;
+float sheet2=0;
+boolean open;
+float testPlate=255;
 
 
 //jars
@@ -70,7 +75,7 @@ void setup() {
 }
 void draw() {  
   background(0);
-  if (scene!=4) {  //if scene does not = 3
+  if (scene!=5) {  //if scene does not = 3
     expand=0;  //reset value of expand
   }
   if (scene==1) {
@@ -97,11 +102,18 @@ void draw() {
     button(-250, "KITCHEN(2)", 100);
     button(-20, "LIVINGROOM(3)", 100);
     button(210, "BEDROOM(4)", 255);
+  }  else if (scene==5) {
+    scene5();
+    button(-480, "START(1)", 100);
+    button(-250, "KITCHEN(2)", 100);
+    button(-20, "LIVINGROOM(3)", 100);
+    button(210, "BEDROOM(4)", 100);
   }  
-  if (scene!=1) {
+  if (score==7){scene=5;}
+  if (scene!=1||scene!=5) {
     scorePos(200);
   }
-  if (test==255||test2==0||test3==0||test4==0||puddle==450) {
+  if (test==255||test2==0||test3==0||test4==0||puddle==450||sheet==190||fluff==90||testPlate==0) {
     score=score+1;
   }
   println("x = " + mouseX);
@@ -109,6 +121,7 @@ void draw() {
   //+230 space between boxes
   if (mousePressed&&mouseX>20&&mouseX<220&& mouseY>550&&mouseY<600) {
     scene=1;
+    score=0;
   }
   if (mousePressed&&mouseX>250&&mouseX<450&& mouseY>550&&mouseY<600) {
     scene=2;
@@ -119,6 +132,7 @@ void draw() {
   if (mousePressed&&mouseX>710&&mouseX<910&& mouseY>550&&mouseY<600) {
     scene=4;
   }
+  open=false;
 }
 
 void keyPressed() {
@@ -233,7 +247,7 @@ void bottle(int x, int y) {
   ellipse(width/2+10+x+move, height/2-5+y, 20, 20);
 }
 void fruit(int x, int y) {
-  fill(50);
+  fill(50, 50, 50, testF);
   ellipse(width/2+x+move, height/2+y, 50, 50);
   fill(150);
   ellipse(width/2+x+move, height/2-25+y, 10, 20);
@@ -241,7 +255,12 @@ void fruit(int x, int y) {
   ellipse(width/2-10+x+move, height/2-5+y, 5, 5);
   ellipse(width/2-5+x+move, height/2-10+y, 5, 5);
   ellipse(width/2-10+x+move, height/2-15+y, 5, 5);
+  //fruits
+  if (open==true&&mousePressed&&mouseX>width/2+x&&mouseX<width/2+x+50) {
+    testF--;
+  }
 }
+//IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
 void frige(int x) {
   //base
   fill(160);
@@ -271,18 +290,22 @@ void frige(int x) {
   fill(160);
   rect(width/2+70+move+x+fri1, height/2-30, 20, 50, 100);
   rect(width/2+70+move+x+fri1, height/2-150, 20, 50, 100);
-  if (mousePressed&&mouseX>=width/2+60+move+x+fri1&&mouseX<width/2+60+move+x+fri1+280) {
+  if (mousePressed&&mouseX>width/2+60+move+x+fri1&&mouseX<width/2+60+move+x+fri1+280) {
     fri1++;
     fri--;
   }
+  if (fri>400) {
+    open=true;
+  }
 }
 void plate(int x, int y) {
-  fill(240, 240, 240, test3);
+  fill(240, 240, 240, testPlate);
   ellipse(x+move, y, 110, 110);
-  fill(230, 230, 230, test3);
+  fill(230, 230, 230, testPlate);
   ellipse(x+move, y, 70, 70);
-  if (mousePressed&&mouseX>x-110/2&&mouseX<x+100/2&&mouseY>y-110/2&&mouseY<y+110/2) {
-    test3--;
+  //plate 230 330 190 300
+  if (mousePressed&&mouseX>230&&mouseX<330&&mouseY>190&&mouseY<300) {
+    testPlate--;
   }
 }
 void sink(int x, int y) {
@@ -297,13 +320,13 @@ void sink(int x, int y) {
   //nossel
   fill(170);
   rect(x+move+10+50, y-20, 50, 20, 100);
-  //knobs
+  //knobs 175 300 250 300
   ellipse(x+move+10, y+5, 40, 30);
   ellipse(x+move+140, y+5, 40, 30);
   fill(240);
   ellipse(x+move+10, y, 20, 15);
   ellipse(x+move+140, y, 20, 15);  
-  if (mousePressed) {
+  if (mousePressed&&mouseX>=140&&mouseX<300&&mouseY>250&&mouseY<300) {
     flow++;
   }
   if (flow>=250)
@@ -395,7 +418,6 @@ void cat() {
     line(mouseX-90, mouseY-body, mouseX-15, mouseY-60);
     strokeWeight(17);
     fill(0);
-    //circle(mouseX-80, mouseY-65, 40);
     circle(mouseX-90, mouseY-65, 40);
   }
 }
@@ -434,30 +456,33 @@ void couch(int x) {
   ellipse(width/2-200+x+move, height/2+100, 20, 20);
   fill(100);
   ellipse(width/2-600+x+move, height/2+100, 20, 20);
-
   stroke(0);
-  strokeWeight(fluff/100);
+  strokeWeight(fluff/90);
+  line(width/2-210+move+10, height/2+90, width/2-180+move+10, height/2+20);
+  line(width/2-310+move+10, height/2+90, width/2-280+move+10, height/2+20);
+  line(width/2-410+move+10, height/2+90, width/2-380+move+10, height/2+20);
   line(width/2-210+move, height/2+90, width/2-180+move, height/2+20);
   line(width/2-310+move, height/2+90, width/2-280+move, height/2+20);
   line(width/2-410+move, height/2+90, width/2-380+move, height/2+20);
+  line(width/2-210+move-10, height/2+90, width/2-180+move-10, height/2+20);
+  line(width/2-310+move-10, height/2+90, width/2-280+move-10, height/2+20);
+  line(width/2-410+move-10, height/2+90, width/2-380+move-10, height/2+20);
   noStroke();
-
   fill(250);
   circle(width/2+move-200, height/2+70, fluff/2);
   circle(width/2+move-190, height/2+70, fluff/2);
   circle(width/2+move-185, height/2+60, fluff/2);
-
   circle(width/2+move-300, height/2+50, fluff/3);
   circle(width/2+move-290, height/2+50, fluff/3);
   circle(width/2+move-285, height/2+60, fluff/3);  
-
   circle(width/2+move-400, height/2+70, fluff/4);
   circle(width/2+move-390, height/2+70, fluff/4);
   circle(width/2+move-385, height/2+60, fluff/4);
-  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   fill(100, 100, 100, test3);
-  rect(width/2-450, height/2+10, 300, 100);
-  if (mousePressed) {
+  rect(width/2-450+move, height/2+10, 300, 100);
+  // 200 600 300 500
+  
+  if (mousePressed&&mouseX>200&&mouseX<600&&mouseY>300&&mouseY<500) {
     test3--;
     fluff++;
   }
@@ -508,23 +533,56 @@ void scene4() {
 void bed(int x, int y) {
   fill(50);
   ellipse(width/2-200+x+move, height/2+50+y, 100, 300);
-  ellipse(width/2+400+x+move, height/2+100+y, 100, 200);
+  ellipse(width/2+400+x+move, height/2+100+y, 100, 200);  
   //bed
   fill(200);
-  rect(width/2-200+x+move, height/2+y, 600, 200, 100);  
-  //sheet
-  fill(150, 150, 150);  
-  rect(width/2-100+x+move, height/2+y, 500, 200, 100);
+  rect(width/2-200+x+move, height/2+y, 600, 200, 100);    
   //base
   fill(50);
   rect(width/2-200+x+move, height/2+100+y, 600, 100);  
-  for (int a=0; a<=width/3; a+=110) {
-    fill(150, 150, 150);  
-    ellipse(460+a+x+move, height/2+100+y, 110, 50);
+  //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+  stroke(0);
+  strokeWeight(fluff/100);
+  line(width/2-210+move+10, height/2+40, width/2-180+move+10, height/2-20);
+  line(width/2-310+move+10, height/2+40, width/2-280+move+10, height/2-20);
+  line(width/2-410+move+10, height/2+40, width/2-380+move+10, height/2-20);
+  line(width/2-210+move, height/2+40, width/2-180+move, height/2-20);
+  line(width/2-310+move, height/2+40, width/2-280+move, height/2-20);
+  line(width/2-410+move, height/2+40, width/2-380+move, height/2-20);
+  line(width/2-210+move-10, height/2+40, width/2-180+move-10, height/2-20);
+  line(width/2-310+move-10, height/2+40, width/2-280+move-10, height/2-20);
+  line(width/2-410+move-10, height/2+40, width/2-380+move-10, height/2-20);
+  line(width/2-210+move-100, height/2+40, width/2-180+move-100, height/2-20);
+  line(width/2-310+move-100, height/2+40, width/2-280+move-100, height/2-20);
+  line(width/2-410+move-100, height/2+40, width/2-380+move-100, height/2-20);
+  noStroke();
+  fill(250);
+  circle(width/2+move-200, height/2, fluff/2);
+  circle(width/2+move-180, height/2+30, fluff/2);
+  circle(width/2+move-175, height/2, fluff/2);
+  circle(width/2+move-300, height/2, fluff/3);
+  circle(width/2+move-280, height/2+30, fluff/3);
+  circle(width/2+move-275, height/2, fluff/3);  
+  circle(width/2+move-400, height/2, fluff/4);
+  circle(width/2+move-380, height/2+30, fluff/4);
+  circle(width/2+move-375, height/2, fluff/4);
+  circle(width/2+move-500, height/2, fluff/4);
+  circle(width/2+move-480, height/2+30, fluff/4);
+  circle(width/2+move-475, height/2, fluff/4);
+  fill(150, 150, 150);  
+  rect(width/2-100+x+move, height/2+y+sheet1, 500+sheet1, 50+sheet, 100);
+  if (mousePressed&&mouseX>160&&mouseX<400&&mouseY>250&&mouseY<350) {
+    sheet++;
   }
-  if (mousePressed) {
-    //test2--;
-  }
+  if (sheet==200) {
+    sheet=200;
+    sheet1=sheet;
+  }    
+  if (mousePressed&&sheet>190&&mouseX>160&&mouseX<400&&mouseY>250&&mouseY<350) {
+    fluff++;
+  } 
+   if (fluff>=100) {
+    fluff=100;}
 }
 void dresser(int x, int y, int z) {
   fill(100, 100, 100);
@@ -535,7 +593,10 @@ void dresser(int x, int y, int z) {
   rect(width/2+125+x+move, height/2-70+y, 300, 200);
   fill(105);  
   rect(width/2+100+x+move, height/2-70+y, 350, 10);
-  if (mousePressed) {
+  if (mousePressed&&mouseX>width/2+200
+    &&mouseX<width/2+275+200
+    &&mouseY>height/2-200&&mouseY<height/2+400
+    ) {
     test4--;
   }
 }
@@ -555,7 +616,7 @@ void scorePos(int a) {
   ellipse(width/2+a, height/4-120, 400, 100);
   textSize(50);
   fill(255);   
-  text("score: " + score + " /100", width/2+a, height/4-100);
+  text("score: " + score + " /7", width/2+a, height/4-100);
 }
 void moving() {
   if (keyPressed) {
@@ -569,4 +630,12 @@ void moving() {
 void border() {
   fill(255);
   rect(-250+move, 0, 1300, 600);
+}
+void scene5(){  
+background(0);
+  fill(0, 0, 0, 100);
+  ellipse(width/2, height/4-120, 400, 100);
+  textSize(50);
+  fill(255);   
+  text("You Win Little Kitty", width/2, height/4+200);
 }
