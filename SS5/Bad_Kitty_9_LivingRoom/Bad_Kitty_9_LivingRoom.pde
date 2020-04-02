@@ -92,7 +92,6 @@ void cat() {
     line(mouseX-120, mouseY-70, mouseX-100, mouseY);
     //tail
     line(mouseX-100, mouseY-70, mouseX-130, mouseY-250);
-
     head(+20, -20);
     //body
     stroke(0);
