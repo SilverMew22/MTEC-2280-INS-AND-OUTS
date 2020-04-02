@@ -18,6 +18,8 @@ int row=4;
 int col=4;
 float flow=0;
 float puddle=0;
+float fluff=0;
+
 
 //jars
 Jar[][] jar=new Jar[row][col];
@@ -99,11 +101,24 @@ void draw() {
   if (scene!=1) {
     scorePos(200);
   }
-  if (test==255||test2==0||test3==0||test4==0) {
+  if (test==255||test2==0||test3==0||test4==0||puddle==450) {
     score=score+1;
   }
   println("x = " + mouseX);
   println("y =" + mouseY);
+  //+230 space between boxes
+  if (mousePressed&&mouseX>20&&mouseX<220&& mouseY>550&&mouseY<600) {
+    scene=1;
+  }
+  if (mousePressed&&mouseX>250&&mouseX<450&& mouseY>550&&mouseY<600) {
+    scene=2;
+  }
+  if (mousePressed&&mouseX>480&&mouseX<680&& mouseY>550&&mouseY<600) {
+    scene=3;
+  }
+  if (mousePressed&&mouseX>710&&mouseX<910&& mouseY>550&&mouseY<600) {
+    scene=4;
+  }
 }
 
 void keyPressed() {
@@ -182,10 +197,10 @@ void window(int x, int y) {
   rect(60+x+move, 120+y, 50, 50);
 }
 void counter(int x) {
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //spill
+  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  //spill
   fill(0, 0, 0, 50);
-  ellipse(width/2+move-530, height/2+200, puddle,puddle/2);
+  ellipse(width/2+move-530, height/2+200, puddle, puddle/2);
   //spill
   fill(110);  
   rect(width/2-500+x+move, height/2, 500, 200);
@@ -279,10 +294,10 @@ void sink(int x, int y) {
   rect(x+move, y+20, 150, 10);
   fill(0, 0, 0, 50);
   rect(width/2+move-535, height/2-40, 10, flow);
- //nossel
+  //nossel
   fill(170);
   rect(x+move+10+50, y-20, 50, 20, 100);
-//knobs
+  //knobs
   ellipse(x+move+10, y+5, 40, 30);
   ellipse(x+move+140, y+5, 40, 30);
   fill(240);
@@ -296,8 +311,9 @@ void sink(int x, int y) {
     flow=250;
     puddle++;
   }
-  if(puddle>460){
-  puddle=460;}
+  if (puddle>460) {
+    puddle=460;
+  }
 } 
 
 void scene3() {
@@ -418,6 +434,36 @@ void couch(int x) {
   ellipse(width/2-200+x+move, height/2+100, 20, 20);
   fill(100);
   ellipse(width/2-600+x+move, height/2+100, 20, 20);
+
+  stroke(0);
+  strokeWeight(fluff/100);
+  line(width/2-210+move, height/2+90, width/2-180+move, height/2+20);
+  line(width/2-310+move, height/2+90, width/2-280+move, height/2+20);
+  line(width/2-410+move, height/2+90, width/2-380+move, height/2+20);
+  noStroke();
+
+  fill(250);
+  circle(width/2+move-200, height/2+70, fluff/2);
+  circle(width/2+move-190, height/2+70, fluff/2);
+  circle(width/2+move-185, height/2+60, fluff/2);
+
+  circle(width/2+move-300, height/2+50, fluff/3);
+  circle(width/2+move-290, height/2+50, fluff/3);
+  circle(width/2+move-285, height/2+60, fluff/3);  
+
+  circle(width/2+move-400, height/2+70, fluff/4);
+  circle(width/2+move-390, height/2+70, fluff/4);
+  circle(width/2+move-385, height/2+60, fluff/4);
+  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  fill(100, 100, 100, test3);
+  rect(width/2-450, height/2+10, 300, 100);
+  if (mousePressed) {
+    test3--;
+    fluff++;
+  }
+  if (fluff>=30) {
+    fluff=30;
+  }
 }
 void shelf() {
   fill(160);
