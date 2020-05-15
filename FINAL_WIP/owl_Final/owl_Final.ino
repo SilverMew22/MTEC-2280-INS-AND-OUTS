@@ -1,10 +1,10 @@
 //Shequana_Garnett/Final/Owl
 #include <Stepper.h>
-int photoResistorPin = A0;
+const int photoResistorPin = A0;
 int stepperRot = 200;
 const int LEDa = 5;
 const int LEDb = 4;
-bool light=false;
+byte val; // stores data received from serial port
 Stepper stepper(stepperRot, 6, 9, 10, 11);
 
 void setup()
@@ -16,40 +16,38 @@ void setup()
 }
 
 void loop() {
+    if (Serial.available()) { // If data is available to read
+    val = Serial.read(); // read it and store it in val
+  }
   int photoPinVal = analogRead(photoResistorPin);
   Serial.println(photoPinVal);
-  if (photoPinVal < 1) {
-    light=true;
-    if(light==true)
+  if (photoPinVal <= 0 || val == 1) {
     {digitalWrite(LEDa, HIGH);
     digitalWrite(LEDb, HIGH);    
-    stepperFun();   
-delay(100);}
-else{light=false;}
-  }  else
-// if   (photoPinVal > 2) 
-{light=false;
-  //{   
-  if(light==false){
+    //stepperFun();
+    }
+  }  else if(val == 0){
     digitalWrite(LEDa, LOW);
      digitalWrite(LEDb, LOW);
-    stepperRot = 0;
-         delay(100);}}
-  //}
+    //stepperRot = 0;
+        }
+        else {
+    digitalWrite(LEDa, LOW);
+     digitalWrite(LEDb, LOW);
+    //stepperRot = 0;
+        }
+        }
 
-}
 
 
 
 void stepperFun() {
   for (stepperRot = 0; stepperRot < 180; stepperRot++) {
-    stepper.step(stepperRot); 
-     
+    stepper.step(stepperRot);      
     delay(10);
   }
   for (stepperRot = 180; stepperRot > 0; stepperRot--) {
-    stepper.step(stepperRot);
-    
+    stepper.step(stepperRot);    
     delay(10);
   }
 }

@@ -6,6 +6,7 @@ int eyeTurnL=0;
 int eyeTurnR=0;
 int eyeTurnB=0;
 int eyecolor=50;
+
 void setup() {
   size(1000, 800); 
   noStroke();
@@ -123,15 +124,8 @@ void owl(int x, int y) {
       eyecolor=color(255, 255, 0);
        myPort.write(1); 
    println ("1");
-    }
-    else {     
-   myPort.write(0); 
-   println ("0");
-   eyecolor=50;
-    }
-  }
-
-  
+    }  
+  }  
     if (mousePressed&&mouseX>200&&mouseX<350&&mouseY>195&&mouseY<400) {
     if (eyeTurnL>-30) {
       eyeTurnR--;
@@ -139,15 +133,14 @@ void owl(int x, int y) {
       eyecolor=color(255, 255, 0);
       myPort.write(1); 
    println ("1");
-    }
-    else {
+    }   
+  }
+   if (mousePressed != true){     
    myPort.write(0); 
    println ("0");
    eyecolor=50;
     }
-  }
 }
-
 /////////////////////////////////////left arrow
 void leftArrow(int x, int y) {
   fill(100);
