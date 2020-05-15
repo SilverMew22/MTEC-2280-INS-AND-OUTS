@@ -1,3 +1,5 @@
+import processing.serial.*;
+Serial myPort;
 int wingSpread=150;
 int wingLift=50;
 int eyeTurnL=0;
@@ -9,6 +11,9 @@ void setup() {
   noStroke();
   rectMode(CENTER);
   ellipseMode(CENTER);
+  printArray(Serial.list()); // prints port list to the console
+  String portName = Serial.list()[0]; //change to match your port
+  myPort = new Serial(this, portName, 9600); //initialize Serial communication at 9600 baud
 }
 
 void draw() {
@@ -116,27 +121,33 @@ void owl(int x, int y) {
       eyeTurnR++;
       eyeTurnL++;
       eyecolor=color(255, 255, 0);
+       myPort.write(1); 
+   println ("1");
     }
-    else {
-      eyeTurnR--;
-      eyeTurnL--;
-      
+    else {     
+   myPort.write(0); 
+   println ("0");
+   eyecolor=50;
     }
-  }else{ eyecolor=50;}
+  }
+
   
     if (mousePressed&&mouseX>200&&mouseX<350&&mouseY>195&&mouseY<400) {
     if (eyeTurnL>-30) {
       eyeTurnR--;
       eyeTurnL--;
       eyecolor=color(255, 255, 0);
+      myPort.write(1); 
+   println ("1");
     }
     else {
-      eyeTurnR++;
-      eyeTurnL++;
-     
+   myPort.write(0); 
+   println ("0");
+   eyecolor=50;
     }
   }
 }
+
 /////////////////////////////////////left arrow
 void leftArrow(int x, int y) {
   fill(100);
