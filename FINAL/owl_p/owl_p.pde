@@ -31,7 +31,69 @@ void draw() {
   println(mouseX);
   println(mouseY);
 }
+//////////////////////////////////////////owl
+void owl(int x, int y) {
+  //////////////////////////////////////////feet
+  ///////////////////////////////////////////left
+  fill(255);
+  rect(width/2-50,height/2+160,10,40,100);
+  rect(width/2-60,height/2+160,10,40,100);
+  rect(width/2-70,height/2+160,10,40,100);
+    ///////////////////////////////////////////right
+  rect(width/2+50,height/2+160,10,40,100);
+  rect(width/2+60,height/2+160,10,40,100);
+  rect(width/2+70,height/2+160,10,40,100);
+  //////////////////////////////////////////body
+  fill(50);  
+  rect(width/2+x, height/2+y+50, 250, 200, 100);
+  /////////////////////////////////////////////head
+  rect(width/2+x, height/2+y-100, 250, 200, 100);
+  //////////////////////////eyes
+  fill(255);
+  ellipse(width/2-50+eyeTurnL, height/2-150, 50, 50);
+  ellipse(width/2-50+eyeTurnL-30, height/2-130, 50, 50);
+  ellipse(width/2-50+eyeTurnL-40, height/2-100, 50, 50);
+  ellipse(width/2-50+eyeTurnL, height/2-100, 70, 70);  
+  fill(255);
+  ellipse(width/2-50+eyeTurnR+100, height/2-150, 50, 50);
+  ellipse(width/2-50+eyeTurnR+130, height/2-130, 50, 50);
+  ellipse(width/2-50+eyeTurnR+140, height/2-100, 50, 50);
+  ellipse(width/2-50+eyeTurnR+100, height/2-100, 70, 70);
+  //////////////////eyes
+  fill(eyecolor);
+  ellipse(width/2-50+eyeTurnR+100, height/2-100, 50, 50);
+  ellipse(width/2-50+eyeTurnL, height/2-100, 50, 50);
+  fill(255);
+  triangle(width/2-20+eyeTurnR, height/2-50, width/2+eyeTurnR, height/2-10, width/2+20+eyeTurnR, height/2-50);
+  //////////////////////////////////wings
+  ellipse(width/2-100, height/2+50, wingLift, wingSpread);
+ ellipse(width/2+100, height/2+50, wingLift, wingSpread);
+  if (mousePressed&&mouseX>650&&mouseX<800&&mouseY>195&&mouseY<400) {
+           myPort.write(1); 
+   println ("1");
+    if (eyeTurnL<50) {
+      eyeTurnR++;
+      eyeTurnL++;
+      eyecolor=color(255, 255, 0);
 
+    }  
+  }  
+    if (mousePressed&&mouseX>200&&mouseX<350&&mouseY>195&&mouseY<400) {
+       myPort.write(2); 
+   println ("2");
+    if (eyeTurnL>-30) {
+      eyeTurnR--;
+      eyeTurnL--;
+      eyecolor=color(255, 255, 0);
+     
+    }   
+  }
+   if (mousePressed != true){     
+   myPort.write(3); 
+   println ("3");
+   eyecolor=50;
+    }
+}
 //////////////////////////////////////////////////window
 void window(int x, int y) {
   fill(0);
@@ -80,67 +142,7 @@ for (int i=0; i<=15; i++) {
     }
   }
 }
-//////////////////////////////////////////owl
-void owl(int x, int y) {
-  //////////////////////////////////////////feet
-  ///////////////////////////////////////////left
-  fill(255);
-  rect(width/2-50,height/2+160,10,40,100);
-  rect(width/2-60,height/2+160,10,40,100);
-  rect(width/2-70,height/2+160,10,40,100);
-    ///////////////////////////////////////////right
-  rect(width/2+50,height/2+160,10,40,100);
-  rect(width/2+60,height/2+160,10,40,100);
-  rect(width/2+70,height/2+160,10,40,100);
-  //////////////////////////////////////////body
-  fill(50);  
-  rect(width/2+x, height/2+y+50, 250, 200, 100);
-  /////////////////////////////////////////////head
-  rect(width/2+x, height/2+y-100, 250, 200, 100);
-  //////////////////////////eyes
-  fill(255);
-  ellipse(width/2-50+eyeTurnL, height/2-150, 50, 50);
-  ellipse(width/2-50+eyeTurnL-30, height/2-130, 50, 50);
-  ellipse(width/2-50+eyeTurnL-40, height/2-100, 50, 50);
-  ellipse(width/2-50+eyeTurnL, height/2-100, 70, 70);  
-  fill(255);
-  ellipse(width/2-50+eyeTurnR+100, height/2-150, 50, 50);
-  ellipse(width/2-50+eyeTurnR+130, height/2-130, 50, 50);
-  ellipse(width/2-50+eyeTurnR+140, height/2-100, 50, 50);
-  ellipse(width/2-50+eyeTurnR+100, height/2-100, 70, 70);
-  //////////////////eyes
-  fill(eyecolor);
-  ellipse(width/2-50+eyeTurnR+100, height/2-100, 50, 50);
-  ellipse(width/2-50+eyeTurnL, height/2-100, 50, 50);
-  fill(255);
-  triangle(width/2-20+eyeTurnR, height/2-50, width/2+eyeTurnR, height/2-10, width/2+20+eyeTurnR, height/2-50);
-  //////////////////////////////////wings
-  ellipse(width/2-100, height/2+50, wingLift, wingSpread);
- ellipse(width/2+100, height/2+50, wingLift, wingSpread);
-  if (mousePressed&&mouseX>650&&mouseX<800&&mouseY>195&&mouseY<400) {
-    if (eyeTurnL<50) {
-      eyeTurnR++;
-      eyeTurnL++;
-      eyecolor=color(255, 255, 0);
-       myPort.write(1); 
-   println ("1");
-    }  
-  }  
-    if (mousePressed&&mouseX>200&&mouseX<350&&mouseY>195&&mouseY<400) {
-    if (eyeTurnL>-30) {
-      eyeTurnR--;
-      eyeTurnL--;
-      eyecolor=color(255, 255, 0);
-      myPort.write(1); 
-   println ("1");
-    }   
-  }
-   if (mousePressed != true){     
-   myPort.write(0); 
-   println ("0");
-   eyecolor=50;
-    }
-}
+
 /////////////////////////////////////left arrow
 void leftArrow(int x, int y) {
   fill(100);
